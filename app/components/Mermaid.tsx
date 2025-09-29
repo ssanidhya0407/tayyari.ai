@@ -13,11 +13,12 @@ export default function MermaidDiagram({ chart }: { chart: string }) {
 
   useEffect(() => {
     let mounted = true;
+    const element = ref.current;
 
     (async () => {
       try {
         const mermaid = (await import('mermaid')).default as typeof mermaidType;
-        if (!mounted || !ref.current || !chart) return;
+        if (!mounted || !element || !chart) return;
 
         mermaid.initialize({
           startOnLoad: false,
@@ -34,10 +35,10 @@ export default function MermaidDiagram({ chart }: { chart: string }) {
 
         const id = `m-${uuid()}`;
         const { svg } = await mermaid.render(id, chart);
-        if (ref.current) ref.current.innerHTML = svg;
+        if (element) element.innerHTML = svg;
       } catch {
-        if (ref.current) {
-          ref.current.innerHTML =
+        if (element) {
+          element.innerHTML =
             '<p class="text-slate-400 text-sm p-3">Could not render diagram.</p>';
         }
       }
@@ -45,7 +46,10 @@ export default function MermaidDiagram({ chart }: { chart: string }) {
 
     return () => {
       mounted = false;
-      if (ref.current) ref.current.innerHTML = '';
+      // Use stored element variable in cleanup to avoid ref.current warning
+      if (element) {
+        element.innerHTML = '';
+      }
     };
   }, [chart]);
 

@@ -21,7 +21,7 @@ export default function UniversalHeader() {
     <>
       {/* Navbar first */}
       <nav className="relative z-40">
-        <Navbar />
+        <Navbar loggedIn={!!user} />
       </nav>
       
       {/* Points Display after navbar, only for authenticated users */}

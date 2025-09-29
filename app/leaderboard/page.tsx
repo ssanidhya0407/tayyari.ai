@@ -5,36 +5,26 @@ import { useState, useEffect } from "react"
 import { Search, ChevronDown } from "lucide-react"
 import Navbar from "@/components/custom/navbar"
 import Link from "next/link"
+import Image from "next/image"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 15 },
   animate: { opacity: 1, y: 0 },
-  transition: {
-    duration: 0.7,
-    ease: [0.22, 1, 0.36, 1],
-  },
 }
 
 const staggerContainer = {
+  initial: {},
   animate: {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
-      ease: [0.22, 1, 0.36, 1],
     },
   },
 }
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.98 },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
+  animate: { opacity: 1, scale: 1 },
 }
 
 // Mock data for the leaderboard
@@ -140,7 +130,7 @@ export default function Leaderboard() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        <img className="h-10 w-10 rounded-full" src={user.avatar} alt={user.name} />
+                        <Image className="h-10 w-10 rounded-full" src={user.avatar} alt={user.name} width={40} height={40} />
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">{user.name}</div>

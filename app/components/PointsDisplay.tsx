@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@clerk/nextjs';
 
@@ -24,13 +24,21 @@ export default function PointsDisplay() {
   const [floatingPoints, setFloatingPoints] = useState<FloatingPoints[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user?.id) {
-      initializeAndFetchUser();
+  const fetchUserStats = useCallback(async () => {
+    if (!user) return;
+    
+    try {
+      const response = await fetch(`http://localhost:5000/api/user/${user.id}/stats`);
+      if (response.ok) {
+        const data = await response.json();
+        setUserStats(data);
+      }
+    } catch (error) {
+      console.error('Error fetching user stats:', error);
     }
   }, [user]);
 
-  const initializeAndFetchUser = async () => {
+  const initializeAndFetchUser = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -52,23 +60,17 @@ export default function PointsDisplay() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, fetchUserStats]);
 
-  const fetchUserStats = async () => {
-    if (!user?.id) return;
-    
-    try {
-      const response = await fetch(`http://localhost:5000/api/user/${user.id}/stats`);
-      const data = await response.json();
-      if (data.user_stats) {
-        setUserStats(data.user_stats);
-      }
-    } catch (error) {
-      console.error('Error fetching user stats:', error);
+  useEffect(() => {
+    if (user?.id) {
+      initializeAndFetchUser();
     }
-  };
+  }, [user, initializeAndFetchUser]);
 
-  const showFloatingPoints = (points: number, message: string) => {
+
+
+  const showFloatingPoints = useCallback((points: number, message: string) => {
     const id = Math.random().toString(36).substr(2, 9);
     const newFloatingPoint: FloatingPoints = { id, points, message };
     
@@ -79,12 +81,12 @@ export default function PointsDisplay() {
       setFloatingPoints(prev => prev.filter(fp => fp.id !== id));
       fetchUserStats(); // Refresh stats after points awarded
     }, 3000);
-  };
+  }, [fetchUserStats]);
 
   // Expose function globally for quiz component to use
   useEffect(() => {
     (window as any).showFloatingPoints = showFloatingPoints;
-  }, []);
+  }, [showFloatingPoints]);
 
   if (loading) {
     return (

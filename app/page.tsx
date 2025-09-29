@@ -17,25 +17,18 @@ const fadeInUp = {
 };
 
 const staggerContainer = {
+  initial: {},
   animate: { 
     transition: { 
       staggerChildren: 0.3,
       delayChildren: 0.2,
-      ease: [0.22, 1, 0.36, 1]
     } 
   }
 };
 
 const scaleIn = {
   initial: { opacity: 0, scale: 0.98 },
-  animate: { 
-    opacity: 1, 
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+  animate: { opacity: 1, scale: 1 }
 };
 
 export default function Home() {
