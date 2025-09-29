@@ -27,5 +27,8 @@ jobs:
         run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_default_key_for_build
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_d2lubmluZy1ib3hlci04My5jbGVyay5hY2NvdW50cy5kZXYk
           NEXT_PUBLIC_API_URL: http://localhost:5000
+          NEXT_PUBLIC_GEMINI_API_KEY: AIzaSyDJ9WTN8KmhT--Xqq8k-C0dS1d5EPLgP8Y
+          NEXT_PUBLIC_UPLOADCARE_PUBLIC_KEY: b26f91aa50012cf512dc
+          NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: ipwz-tZsGeb6sB3lG5DB73RAj_lfSDNrTfzAcCfmMyo

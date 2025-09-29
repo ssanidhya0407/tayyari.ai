@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider 
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_default_key_for_build'}
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
     >
       <html lang="en" className={inter.className}>
         <body className={inter.className}>
