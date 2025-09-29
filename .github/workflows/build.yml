@@ -25,3 +25,7 @@ jobs:
 
       - name: Run Build
         run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_default_key_for_build
+          NEXT_PUBLIC_API_URL: http://localhost:5000
