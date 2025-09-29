@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['images.unsplash.com', 'source.unsplash.com'],
   },
+  
+  // Experimental features
+  experimental: {
+    // Optimize for production
+    optimizePackageImports: ['@clerk/nextjs', 'framer-motion'],
+  },
+  
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -12,6 +19,9 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  
+  // Add output file tracing root to avoid lockfile warnings
+  outputFileTracingRoot: path.join(__dirname),
 };
 
 export default nextConfig;
